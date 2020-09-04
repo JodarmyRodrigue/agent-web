@@ -3,18 +3,22 @@
 
 <head>
   <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/global/bootstrap.min.css' />
-  <link rel='stylesheet' href='/stylesheets/global/global.css' />
-  <link rel='stylesheet' href='/stylesheets/welcome/welcome.css' />
+  <%- include('blocks/stylesheets'); %> 
 </head>
 
 <body>
-  <h1><%= title %></h1>
-  <p>Welcome to <%= title %></p>
+  <%- include('blocks/navbar'); %> 
 
-  <script src="/javascripts/global/jquery.min.js"></script>
-  <script src="/javascripts/global/bootstrap.min.js"></script>
-  <script src="/javascripts/global/global.js"></script>
+  <div class="content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px 60px; height: 100%;">
+    <img src="/images/corona.png" alt="" srcset="">
+    <h1>Bienvenue</h1>
+    <p style="padding:10px 25%">Merci pour votre contribution à la lutte contre le COVID-19
+      et la constitution de tel suivi des médecins dans leurs tâches
+      respectives. Ensemble contre le Coronavirus!</p>
+      <p>Application créé par Pr BAMBA @ 2020 tout droit réservé, FAQ</p>
+  </div>
+
+  <%- include('blocks/javascripts'); %> 
 </body>
 
 </html>
