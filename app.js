@@ -11,7 +11,7 @@ var loginRouter = require('./routes/auth/login');
 var registerRouter = require('./routes/auth/register');
 var accountRouter = require('./routes/dashboard/account');
 var agentsRouter = require('./routes/dashboard/agents');
-var createAgentRouter = require('./routes/dashboard/create-agent'):
+var createAgentRouter = require('./routes/dashboard/create-agent');
 
 var app = express();
 
