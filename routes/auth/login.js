@@ -24,7 +24,21 @@ router.post('/', function (req, res, next) {
     res.end();
   }
 
-  axios.post(`${baseUrl}/auth/local`, req.body, {
+  let cleanedBody = {};
+
+  try {
+    for(const [key, value] of Object.entries(req.body)){
+      cleanedBody[key] = req.sanitize(req.body[key]);
+    }
+  } catch (error) {
+    console.log('Error during body sanitization :', error);
+    cleanedBody = req.body;
+  } finally{
+    console.log('Body to be sent :', cleanedBody);
+  }
+  
+
+  axios.post(`${baseUrl}/auth/local`, cleanedBody, {
     timeout: 30 * 1000,
   }).then(response => {
     console.log(response);
