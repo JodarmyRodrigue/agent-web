@@ -39,7 +39,8 @@ router.post('/', function (req, res, next) {
   axios.post(`${baseUrl}/auth/local/register`, cleanedBody, {
     timeout: 30 * 1000,
   }).then(response => {
-    console.log(response);
+    console.log('Registration Success: ', response.data);
+    res.status(200).end();
   }).catch(error => {
     if (error.response) {
       if (error.response.data.statusCode === 400) {

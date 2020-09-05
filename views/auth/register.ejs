@@ -62,7 +62,8 @@
 
       axios.post('/auth/register', body)
         .then(response => {
-          console.log(response);
+          alert('Merci pour votre Inscription');
+          window.location = "/dashboard/account";
         }).catch(error => {
           if (error.response) {
             console.dir(error.response);
