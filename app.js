@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var redis = require('redis');
+var expressSanitizer = require('express-sanitizer');
 var RedisStore = require('connect-redis')(session);
 
 
@@ -35,6 +36,7 @@ app.set('view engine', 'ejs');
 //Middlewares
 app.use(logger('dev'));
 app.use(express.json());
+app.use(expressSanitizer());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
