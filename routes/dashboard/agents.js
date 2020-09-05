@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET account page. */
 router.get('/', function(req, res, next) {
-  res.render('dashboard/agents', { title: 'Liste des agents' });
+  res.render('dashboard/agents', { title: 'Liste des agents', user: req.session.user, jwt: req.session.jwt });
 });
 
 module.exports = router;

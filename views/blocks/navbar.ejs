@@ -6,40 +6,47 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav" style="display: flex; flex-direction: row; justify-content: flex-end;">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/dashboard/account">Mon Compte</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/dashboard/agents">Agents</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/dashboard/reports">Rapports de Tests</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/dashboard/forms" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Fiches
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/dashboard/forms/contact">Fiches d'enregistrement des contacts</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/dashboard/forms/notification">Fiches individuelles de notifications de cas de coronavirus</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/dashboard/forms/control">Fiches de contrôles</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/dashboard/create-agent">Créer un Agent</a>
-        </li>
+        <% if (jwt && user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/account">Mon Compte</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/agents">Agents</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/reports">Rapports de Tests</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/dashboard/forms" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Fiches
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/dashboard/forms/contact">Fiches d'enregistrement des contacts</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/dashboard/forms/notification">Fiches individuelles de notifications de cas de coronavirus</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/dashboard/forms/control">Fiches de contrôles</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/create-agent">Créer un Agent</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/logout">Se déconnecter</a>
+          </li>
+
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Connexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/register">Inscription</a>
+          </li>
+        <% } %>
+        
     
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/login">Connexion</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/register">Inscription</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/auth/logout">Se déconnecter</a>
-        </li>
+       
+       
       </ul>
     </div>
   </nav>

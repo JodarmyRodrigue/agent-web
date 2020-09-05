@@ -11,7 +11,7 @@ if (process.env.ENV === 'DEV') {
 
 /* GET register page. */
 router.get('/', function(req, res, next) {
-  res.render('auth/register', { title: 'Inscription' });
+  res.render('auth/register', { title: 'Inscription' , user: req.session.user, jwt: req.session.jwt });
 });
 
 router.post('/', function (req, res, next) {

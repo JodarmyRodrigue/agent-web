@@ -12,7 +12,9 @@ if (process.env.ENV === 'DEV') {
 /* GET login page. */
 router.get('/', function (req, res, next) {
   res.render('auth/login', {
-    title: 'Connexion'
+    title: 'Connexion',
+    user: req.session.user,
+    jwt: req.session.jwt
   });
 });
 
@@ -27,16 +29,16 @@ router.post('/', function (req, res, next) {
   let cleanedBody = {};
 
   try {
-    for(const [key, value] of Object.entries(req.body)){
+    for (const [key, value] of Object.entries(req.body)) {
       cleanedBody[key] = req.sanitize(req.body[key]);
     }
   } catch (error) {
     console.log('Error during body sanitization :', error);
     cleanedBody = req.body;
-  } finally{
+  } finally {
     console.log('Body to be sent :', cleanedBody);
   }
-  
+
 
   axios.post(`${baseUrl}/auth/local`, cleanedBody, {
     timeout: 30 * 1000,
@@ -44,13 +46,13 @@ router.post('/', function (req, res, next) {
     console.log('Login Success: ', response.data);
     try {
       req.session.jwt = response.data.jwt;
-    req.session.user = response.data.user;
-    res.status(200).end();
+      req.session.user = response.data.user;
+      res.status(200).end();
     } catch (error) {
       console.log('Error while storing data to session :', error);
       res.status(500).send('Error');
     }
-    
+
   }).catch(error => {
     if (error.response) {
       if (error.response.data.statusCode === 400) {
