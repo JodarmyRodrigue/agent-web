@@ -3,40 +3,46 @@
 
 <head>
   <title><%= title %></title>
-  <%- include('../blocks/stylesheets'); %> 
+  <%- include('../blocks/stylesheets'); %>
 </head>
 
 <body>
-  <%- include('../blocks/navbar'); %> 
+  <%- include('../blocks/navbar'); %>
 
-  <div class="content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px 60px; height: 100%;">
+  <div class="content"
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px 60px; height: 100%;">
     <h1><%= title %></h1>
     <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Prénom</th>
-            <th scope="col">Matricule</th>
-            <th scope="col">Ville-Village</th>
-          </tr>
-        </thead>
-        <tbody>
+      <thead>
+        <tr>
+          <th scope="col">Nom</th>
+          <th scope="col">Prénom</th>
+          <th scope="col">Matricule</th>
+          <th scope="col">Ville-Village</th>
+        </tr>
+      </thead>
+      <tbody>
 
+        <% if (agents.length<0) { %>
           <% for( let index = 0; index < agents.length; index++ ) { %>
-            <tr>
-              <th scope="row"> <%= agents[index].firstname %> </th>
-              <td> <%= agents[index].lastname %> </td>
-              <td> <%= agents[index].matricule %> </td>
-              <td> <%= agents[index].city %> </td>
-            </tr>
+          <tr>
+            <th scope="row"> <%= agents[index].firstname %> </th>
+            <td> <%= agents[index].lastname %> </td>
+            <td> <%= agents[index].matricule %> </td>
+            <td> <%= agents[index].city %> </td>
+          </tr>
           <% } %>
-         
-        
-        </tbody>
-      </table>
+        <% } else { %>
+          <h1>PAS D'AGENTS DISPONIBLES</h1>
+        <% } %>
+
+
+
+      </tbody>
+    </table>
   </div>
 
-  <%- include('../blocks/javascripts'); %> 
+  <%- include('../blocks/javascripts'); %>
 </body>
 
 </html>
