@@ -16,6 +16,7 @@ var usersRouter = require('./routes/users');
 
 var loginRouter = require('./routes/auth/login');
 var registerRouter = require('./routes/auth/register');
+var logoutRouter = require('./routes/auth/logout');
 
 var accountRouter = require('./routes/dashboard/account');
 var agentsRouter = require('./routes/dashboard/agents');
@@ -68,6 +69,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth/login', loginRouter);
 app.use('/auth/register', registerRouter);
+app.use('/auth/logout', logoutRouter);
 
 app.use('/dashboard/account', accountRouter);
 app.use('/dashboard/agents', agentsRouter);
