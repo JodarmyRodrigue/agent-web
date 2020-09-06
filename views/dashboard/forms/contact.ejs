@@ -14,31 +14,24 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">ID CAS</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Instigateur</th>
+            <th scope="col">Date de soumission</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          <% for( let index = 0; index < sheets.length; index++ ) { %>
+            <tr>
+              <th scope="row"><%= sheets[index].case_id %> </th>
+              <td><%= sheets[index].firstname %> </td>
+              <td><%= sheets[index].lastname %> </td>
+              <td><%= sheets[index].instigator_name %> </td>
+              <td><%= sheets[index].created_at %> </td>
+            </tr>
+          <% } %>
+          
         </tbody>
       </table>
   </div>
