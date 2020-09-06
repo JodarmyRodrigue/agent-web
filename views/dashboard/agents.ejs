@@ -23,8 +23,7 @@
       </thead>
       <tbody>
 
-        <% if (agents.length<0) { %>
-          <% for( let index = 0; index < agents.length; index++ ) { %>
+        <% for( let index = 0; index < agents.length; index++ ) { %>
           <tr>
             <th scope="row"> <%= agents[index].firstname %> </th>
             <td> <%= agents[index].lastname %> </td>
@@ -32,11 +31,6 @@
             <td> <%= agents[index].city %> </td>
           </tr>
           <% } %>
-        <% } else { %>
-          <h1>PAS D'AGENTS DISPONIBLES</h1>
-        <% } %>
-
-
 
       </tbody>
     </table>
