@@ -10,6 +10,7 @@ if (process.env.ENV === 'DEV') {
 }
 
 router.get('/', function(req, res, next) {
+  console.log(req.session);
   res.render('dashboard/account', { title: 'Mon Compte', user: req.session.user, jwt: req.session.jwt });
 });
 
@@ -41,7 +42,8 @@ router.post('/', function (req, res, next) {
   }).then(response => {
     console.log('User data change Success: ', response.data);
     try {
-    req.session.user = response.data.user;
+    req.session.user = response.data;
+    console.log(req.session);
     res.status(200).end();
     } catch (error) {
       console.log('Error while storing data to session :', error);
