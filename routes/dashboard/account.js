@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
+var isAuthenticated = require('../../middlewares/isAuthenticated');
 
 let baseUrl;
 if (process.env.ENV === 'DEV') {
@@ -9,8 +10,7 @@ if (process.env.ENV === 'DEV') {
   baseUrl = "https://agent-api";
 }
 
-router.get('/', function (req, res, next) {
-  console.log(req.session);
+router.get('/', isAuthenticated, function (req, res, next) {
   res.render('dashboard/account', {
     title: 'Mon Compte',
     user: req.session.user,
@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.post('/', function (req, res, next) {
+router.post('/', isAuthenticated, function (req, res, next) {
   if (!req.body) {
     res.status(400).send({
       message: 'Veuillez fournir des données'
@@ -49,7 +49,6 @@ router.post('/', function (req, res, next) {
     console.log('User data change Success: ', response.data);
     try {
       req.session.user = response.data;
-      console.log(req.session);
       res.status(200).end();
     } catch (error) {
       console.log('Error while storing data to session :', error);

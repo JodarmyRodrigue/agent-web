@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
+var isAuthenticated = require('../../middlewares/isAuthenticated');
 
 let baseUrl;
 if (process.env.ENV === 'DEV') {
@@ -11,11 +12,11 @@ if (process.env.ENV === 'DEV') {
 
 
 
-router.get('/', function(req, res, next) {
+router.get('/',isAuthenticated, function(req, res, next) {
   res.render('dashboard/create-agent', { title: 'Créer un Agent', user: req.session.user, jwt: req.session.jwt });
 });
 
-router.post('/', function (req, res, next) {
+router.post('/',isAuthenticated, function (req, res, next) {
   if (!req.body) {
     res.status(400).send({
       message: 'Veuillez fournir des données'

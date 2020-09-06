@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios');
+var isAuthenticated = require('../../middlewares/isAuthenticated');
 
 let baseUrl;
 if (process.env.ENV === 'DEV') {
@@ -9,7 +10,7 @@ if (process.env.ENV === 'DEV') {
   baseUrl = "https://agent-api";
 }
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, function (req, res, next) {
   let agents = [];
   axios.get(`${baseUrl}/users?web_user=false`, {
     timeout: 30 * 1000,
