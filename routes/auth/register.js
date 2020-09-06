@@ -22,7 +22,9 @@ router.post('/', function (req, res, next) {
     res.end();
   }
 
-  let cleanedBody = {};
+  let cleanedBody = {
+    web_user: true,
+  };
 
   try {
     for(const [key, value] of Object.entries(req.body)){
