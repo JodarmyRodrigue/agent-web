@@ -11,46 +11,46 @@
 
   <div class="content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px 60px; height: 100%;">
     <h1><%= title %></h1>
-    <form style="width: 100%;">
+    <form id="createAgentForm" style="width: 100%;">
         <div class="form-container" style="display: flex; flex-direction: row; justify-content: space-evenly;">
 
             <div class="left-form" style="display: flex; flex-direction: column;">
                 <div class="form-group">
-                    <label for="first_name">Nom</label>
-                    <input type="text" class="form-control" id="first_name" placeholder="Nom" required>
+                    <label for="firstname">Nom</label>
+                    <input name="firstname" type="text" class="form-control" id="firstname" placeholder="Nom" required>
                   </div>
                   
                   <div class="form-group">
-                      <label for="last_name">Prénom</label>
-                      <input type="text" class="form-control" id="last_name" placeholder="Prénom" required>
+                      <label for="lastname">Prénom</label>
+                      <input name="lastname" type="text" class="form-control" id="lastname" placeholder="Prénom" required>
                     </div>
                     <div class="form-group">
                       <label for="matricule">Matricule</label>
-                      <input type="text" class="form-control" id="matricule" placeholder="Matricule" required>
+                      <input name="matricule" type="text" class="form-control" id="matricule" placeholder="Matricule" required>
                     </div>
                     <div class="form-group">
                       <label for="phone">Téléphone</label>
-                      <input type="tel" class="form-control" id="phone" placeholder="Téléphone" required>
+                      <input name="phone" type="tel" class="form-control" id="phone" placeholder="Téléphone" required>
                     </div>
                     <div class="form-group">
                       <label for="city">Ville - Village</label>
-                      <input type="text" class="form-control" id="city" placeholder="Ville - Village" required>
+                      <input name="city" type="text" class="form-control" id="city" placeholder="Ville - Village" required>
                     </div>
             </div>
 
             <div class="right-form" style="display: flex; flex-direction: column;">
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur</label>
-                    <input type="text" class="form-control" id="username" placeholder="Nom d'utilisateur" required>
+                    <input name="username" type="text" class="form-control" id="username" placeholder="Nom d'utilisateur" required>
                   </div>
                   
                   <div class="form-group">
                       <label for="email">Adresse Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="Adresse Email" required>
+                      <input name="email" type="email" class="form-control" id="email" placeholder="Adresse Email" required>
                     </div>
                     <div class="form-group">
                       <label for="password">Mot de passe</label>
-                      <input type="password" class="form-control" id="password" required>
+                      <input name="password" type="password" class="form-control" id="password" required>
                     </div>
                     <div class="form-group">
                       <label for="password2">Confirmez votre mot de passe</label>
@@ -58,15 +58,64 @@
                     </div>
                     <div class="form-group">
                       <label for="occupation">Votre Poste</label>
-                      <input type="text" class="form-control" id="occupation" placeholder="Votre Poste" required>
+                      <input name="occupation" type="text" class="form-control" id="occupation" placeholder="Votre Poste" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Valider</button>
+                    <button id="createAgentSubmit" type="submit" class="btn btn-primary">Valider</button>
             </div>
         </div >
        
         
       </form>
   </div>
+  <script>
+    let $createAgentForm = document.querySelector('#createAgentForm');
+    let $createAgentSubmit = document.querySelector('#createAgentSubmit');
+
+    let $password = document.querySelector('#password');
+    let $password2 = document.querySelector('#password2');
+   
+    $createAgentSubmit.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      if($password.value != $password2.value){
+        alert('Vos mots de passe ne correspondent pas');
+        return;
+      }
+
+      let formData = new FormData($createAgentForm);
+      let body = {};
+
+
+      for (const [key, value] of formData.entries()) {
+        body[key] = value;
+      }
+
+      axios.post('/dashboard/create-agent', body)
+        .then(response => {
+          alert('Nouvel Agent créé avec succès!');
+          window.location = "/dashboard/agents";
+        }).catch(error => {
+          if (error.response) {
+            console.dir(error.response);
+            if (error.response.status === 400) {
+              alert(error.response.data.message);
+            } else if (error.response.status === 403) {
+              alert('INTERDIT');
+            } else if (error.response.status === 404) {
+              alert('INTROUVABLE');
+            }
+          } else if (error.request) {
+            console.dir(error.request);
+          } else {
+            console.dir(error);
+          }
+        }).finally(() => {
+
+        });
+
+    });
+  </script>
+
 
   <%- include('../blocks/javascripts'); %> 
 </body>
