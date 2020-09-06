@@ -49,14 +49,23 @@ router.post('/', function (req, res, next) {
         message: "Vous n'êtes pas autorisés à vous connecter!",
       });
     } else {
-      try {
-        req.session.jwt = response.data.jwt;
-        req.session.user = response.data.user;
-        res.status(200).end();
-      } catch (error) {
-        console.log('Error while storing data to session :', error);
-        res.status(500).send('Error');
-      }
+      req.session.regenerate(function(err){
+        if(err){
+          console.log('Error while regenerating session :', err);
+          res.status(500).send('Error');
+        }else{
+          console.log('Session regenerated successfuly');
+          try {
+            req.session.jwt = response.data.jwt;
+            req.session.user = response.data.user;
+            res.status(200).end();
+          } catch (error) {
+            console.log('Error while storing data to session :', error);
+            res.status(500).send('Error');
+          }
+        }
+      });
+     
     }
   }).catch(error => {
     if (error.response) {

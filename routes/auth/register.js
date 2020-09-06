@@ -42,14 +42,22 @@ router.post('/', function (req, res, next) {
     timeout: 30 * 1000,
   }).then(response => {
     console.log('Registration Success: ', response.data);
-    try {
-      req.session.jwt = response.data.jwt;
-    req.session.user = response.data.user;
-    res.status(200).end();
-    } catch (error) {
-      console.log('Error while storing data to session :', error);
-      res.status(500).send('Error');
-    }
+    req.session.regenerate(function(err){
+      if(err){
+        console.log('Error while regenerating session :', err);
+        res.status(500).send('Error');
+      }else{
+        console.log('Session regenerated successfuly');
+        try {
+          req.session.jwt = response.data.jwt;
+          req.session.user = response.data.user;
+          res.status(200).end();
+        } catch (error) {
+          console.log('Error while storing data to session :', error);
+          res.status(500).send('Error');
+        }
+      }
+    });
   }).catch(error => {
     if (error.response) {
       if (error.response.data.statusCode === 400) {
