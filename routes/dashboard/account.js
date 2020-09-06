@@ -9,9 +9,13 @@ if (process.env.ENV === 'DEV') {
   baseUrl = "https://agent-api";
 }
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   console.log(req.session);
-  res.render('dashboard/account', { title: 'Mon Compte', user: req.session.user, jwt: req.session.jwt });
+  res.render('dashboard/account', {
+    title: 'Mon Compte',
+    user: req.session.user,
+    jwt: req.session.jwt
+  });
 });
 
 
@@ -25,26 +29,28 @@ router.post('/', function (req, res, next) {
 
   let cleanedBody = {};
   try {
-    for(const [key, value] of Object.entries(req.body)){
+    for (const [key, value] of Object.entries(req.body)) {
       cleanedBody[key] = req.sanitize(req.body[key]);
     }
   } catch (error) {
     console.log('Error during body sanitization :', error);
     cleanedBody = req.body;
-  } finally{
+  } finally {
     console.log('Body to be sent :', cleanedBody);
   }
-  
+
 
   axios.put(`${baseUrl}/users/${req.session.user.id}`, cleanedBody, {
     timeout: 30 * 1000,
-    headers: {"Authorization": `Bearer ${req.session.jwt}`}
+    headers: {
+      "Authorization": `Bearer ${req.session.jwt}`
+    }
   }).then(response => {
     console.log('User data change Success: ', response.data);
     try {
-    req.session.user = response.data;
-    console.log(req.session);
-    res.status(200).end();
+      req.session.user = response.data;
+      console.log(req.session);
+      res.status(200).end();
     } catch (error) {
       console.log('Error while storing data to session :', error);
       res.status(500).send('Error');
