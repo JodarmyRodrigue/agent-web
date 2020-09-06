@@ -44,15 +44,20 @@ router.post('/', function (req, res, next) {
     timeout: 30 * 1000,
   }).then(response => {
     console.log('Login Success: ', response.data);
-    try {
-      req.session.jwt = response.data.jwt;
-      req.session.user = response.data.user;
-      res.status(200).end();
-    } catch (error) {
-      console.log('Error while storing data to session :', error);
-      res.status(500).send('Error');
+    if (!response.data.user.web_user) {
+      res.status(400).send({
+        message: "Vous n'êtes pas autorisés à vous connecter!",
+      });
+    } else {
+      try {
+        req.session.jwt = response.data.jwt;
+        req.session.user = response.data.user;
+        res.status(200).end();
+      } catch (error) {
+        console.log('Error while storing data to session :', error);
+        res.status(500).send('Error');
+      }
     }
-
   }).catch(error => {
     if (error.response) {
       if (error.response.data.statusCode === 400) {
