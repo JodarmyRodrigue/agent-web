@@ -26,7 +26,6 @@ router.get('/', isAuthenticated, function (req, res, next) {
       console.log('Error :', error.request);
     }
   }).finally(() => {
-    console.log(agents);
     res.render('dashboard/agents', {
       title: 'Liste des agents',
       user: req.session.user,
