@@ -29,6 +29,7 @@
               <td><%= sheets[index].lastname %> </td>
               <td><%= sheets[index].instigator_name %> </td>
               <td><%= sheets[index].created_at %> </td>
+              <td> <button id="<%= sheets[index].id %>" class="btn btn-success">Télécharger</button> </td>
             </tr>
           <% } %>
           
@@ -37,6 +38,7 @@
   </div>
 
   <%- include('../../blocks/javascripts'); %> 
+  <script src="/javascripts/dashboard/forms/contact.js"></script>
 </body>
 
 </html>
