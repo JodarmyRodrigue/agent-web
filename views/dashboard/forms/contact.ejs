@@ -29,7 +29,7 @@
               <td><%= sheets[index].lastname %> </td>
               <td><%= sheets[index].instigator_name %> </td>
               <td><%= sheets[index].created_at %> </td>
-              <td> <button id="<%= sheets[index].id %>" class="btn btn-success">Télécharger</button> </td>
+              <td> <a href="/dashboard/forms/contact/download?id=<%= sheets[index].id %>" id="<%= sheets[index].id %>" class="btn btn-success">Télécharger</a> </td>
             </tr>
           <% } %>
           
