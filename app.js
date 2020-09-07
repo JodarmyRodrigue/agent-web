@@ -7,6 +7,7 @@ var session = require('express-session');
 var redis = require('redis');
 var expressSanitizer = require('express-sanitizer');
 var RedisStore = require('connect-redis')(session);
+var helmet = require('helmet');
 
 
 
@@ -36,6 +37,7 @@ app.set('view engine', 'ejs');
 
 //Middlewares
 app.use(logger('dev'));
+app.use(helmet());
 app.use(express.json());
 app.use(expressSanitizer());
 app.use(express.urlencoded({ extended: false }));
