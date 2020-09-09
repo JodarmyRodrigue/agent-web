@@ -23,8 +23,38 @@ router.get('/download', isAuthenticated, async function (req, res, next) {
       },
     }).then(response => {
       const doc = new PDFDocument();
-      const {
-        id,
+      const contactFrenchLabels = {
+        "firstname": "Nom de Famille",
+        "lastname": "Prénom(s)",
+        "gender": "Sexe",
+        "age": "Âge",
+        "case_relation": "Lien avec le cas",
+        "last_contact": "Date du dernier contact avec le cas",
+        "first_visit": "Date de la première visite",
+        "last_check": "Dernière date de suivi",
+        "city": "Ville/Village/Quartier",
+        "district": "District",
+        "phone": "Numéro de Téléphone",
+        "occupation": "Profession/Fonction",
+        "workplace": "Lieu de Travail",
+        "contact_type": "Type de contact(1, 2, 3 ou 4)",
+        "issue": "Issue"
+      };
+      const frenchLabels = {
+        "instigator_name": "Nom de l'Instigateur",
+        "instigator_number": "Numéro de téléphone de l'Agent Récenseur",
+        "case_id": "Numéro ID du cas",
+        "firstname": "Nom de Famille",
+        "lastname": "Prénom(s)",
+        "household_chief_name": "Nom et Prénom(s) du chef de ménage",
+        "case_location": "Lieu d'Identification du cas",
+        "address": "Adresse",
+        "community_chief_name": "Nom et Prénom(s) du responsable communautaire",
+        "symptoms_date": "Date d'apparition des symptômes",
+        "sanitary_district": "District Sanitaire",
+        "region": "Région",
+      };
+      const data = {
         instigator_name,
         instigator_number,
         case_id,
@@ -44,12 +74,66 @@ router.get('/download', isAuthenticated, async function (req, res, next) {
       res.setHeader('Content-disposition', 'attachment; filename="file.pdf"');
       res.setHeader('Content-type', 'application/pdf');
 
-      doc.fontSize(18)
-        .text(`Nom de l'Instigateur : ${instigator_name}`)
-        .text(`Numéro de l'Instigateur : ${instigator_number}`)
-        .text(`Nom : ${firstname}`)
-        .text(`Prénom : ${lastname}`)
-        .text(`Lieu d'identification du cas : ${case_location}`);
+      doc.fontSize(20)
+        .font("Times-Roman")
+        .text("Fiche d'enregistrement des contacts", {
+          underline: true,
+          align: 'center'
+        })
+        .moveDown();
+
+      for (const [key, value] of Object.entries(data)) {
+        if (frenchLabels[key] === undefined) continue;
+        doc.fontSize(18)
+          .font("Times-Bold")
+          .text(`${frenchLabels[key]} :`, {
+            continued: true
+          })
+          .font("Times-Roman")
+          .text(value)
+          .moveDown();
+      }
+
+      if (data.contact_infos && data.contact_infos.length > 0) {
+
+
+
+        for (let i = 0; i < data.contact_infos.length; i++) {
+          doc.addPage();
+
+          if (i === 0) {
+            doc.fontSize(20)
+              .font("Times-Roman")
+              .text("Informations sur les contacts", {
+                underline: true,
+                align: 'center'
+              })
+              .moveDown();
+          }
+
+          doc.fontSize(14)
+            .font("Times-Roman")
+            .text(`Contact #${i+1}`, {
+              underline: true,
+              align: 'center'
+            })
+            .moveDown();
+          for (const [key, value] of Object.entries(data.contact_infos[i])) {
+            if (contactFrenchLabels[key] === undefined) continue;
+            doc.fontSize(16)
+              .font("Times-Bold")
+              .text(`${contactFrenchLabels[key]} :`, {
+                continued: true
+              })
+              .font("Times-Roman")
+              .text(value)
+              .moveDown();
+          }
+
+        }
+      }
+
+
       doc.pipe(res);
       doc.end();
     }).catch(error => {
