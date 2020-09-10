@@ -8,7 +8,7 @@ let baseUrl;
 if (process.env.ENV === 'DEV') {
   baseUrl = "http://127.0.0.1:1337";
 } else {
-  baseUrl = "https://agent-web.herokuapp.com";
+  baseUrl = "https://agent-strapi.herokuapp.com";
 }
 
 router.get('/download', isAuthenticated, async function (req, res, next) {
