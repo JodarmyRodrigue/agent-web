@@ -6,7 +6,7 @@ let baseUrl;
 if (process.env.ENV === 'DEV') {
   baseUrl = "http://127.0.0.1:1337";
 } else {
-  baseUrl = "https://agent-api";
+  baseUrl = "https://agent-web.herokuapp.com";
 }
 
 /* GET login page. */

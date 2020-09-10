@@ -4,9 +4,10 @@ let $loginSubmit = document.querySelector('#loginSubmit');
 $loginSubmit.addEventListener('click', (event) => {
   event.preventDefault();
   let formData = new FormData($loginForm);
+
   let body = {};
 
-
+  //TODO: Try to replace this with a simple Object.create
   for (const [key, value] of formData.entries()) {
     body[key] = value;
   }
